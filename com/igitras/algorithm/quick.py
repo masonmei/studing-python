@@ -1,32 +1,44 @@
 # coding=utf-8
+from random import Random
+from com.igitras.algorithm.libs import swap_element, random_list, validate_list_sorted
+
 __author__ = 'mason'
 
 
 # 快速排序
 def quick_sort(list_to_sort, start, end):
-    left_pointer = start + 1
-    right_pointer = end
-    base_num = list_to_sort[start]
-
-    if left_pointer > end:
+    # 如果start和end一样，说明只有一个元素，就不需要再调整
+    print list_to_sort, start, end
+    if start >= end:
         return
-
-    while right_pointer > left_pointer:
-        while base_num <= list_to_sort[right_pointer] and right_pointer > left_pointer:
-            right_pointer -= 1
-        while base_num >= list_to_sort[left_pointer] and right_pointer > left_pointer:
-            left_pointer += 1
-        if right_pointer > left_pointer:
-            temp = list_to_sort[left_pointer]
-            list_to_sort[left_pointer] = list_to_sort[right_pointer]
-            list_to_sort[right_pointer] = temp
-
-    tmp = list_to_sort[left_pointer]
-    list_to_sort[left_pointer] = list_to_sort[start]
-    list_to_sort[start] = tmp
-
-    quick_sort(list_to_sort, start, left_pointer - 1)
-    quick_sort(list_to_sort, right_pointer + 1, end)
+    else:
+        pivot_index = start
+        left = start + 1
+        right = end
+        if left != right:
+            while left < right:
+                # 从右往左找到第一个小于pivot的数
+                while right > left:
+                    if list_to_sort[right] < list_to_sort[pivot_index]:
+                        swap_element(list_to_sort, pivot_index, right)
+                        pivot_index = right
+                        break
+                    else:
+                        right -= 1
+                # 从左往右找到第一个大于pivot的数
+                while right > left:
+                    if list_to_sort[left] > list_to_sort[pivot_index]:
+                        swap_element(list_to_sort, pivot_index, left)
+                        pivot_index = left
+                        break
+                    else:
+                        left += 1
+        else:
+            if list_to_sort[pivot_index] > list_to_sort[left]:
+                swap_element(list_to_sort, pivot_index, left)
+            pivot_index = left
+        quick_sort(list_to_sort, start, pivot_index - 1)
+        quick_sort(list_to_sort, pivot_index + 1, end)
 
 
 def quick_sort_with_order(list_to_sort, sort):
@@ -36,10 +48,18 @@ def quick_sort_with_order(list_to_sort, sort):
         list_to_sort.reverse()
 
 
-listToSort = [6, 1, 2, 7, 9, 3, 4, 5, 10, 8]
+listToSort = [9, 7, 3, 1, 1, 8, 7, 7]
+print listToSort
 quick_sort_with_order(listToSort, False)
+validate_list_sorted(listToSort, False)
 print listToSort
 
-listToSort = [6, 1, 2, 7, 9, 3, 4, 5, 10]
-quick_sort_with_order(listToSort, True)
-print listToSort
+test_count = 100
+random = Random()
+while test_count > 0:
+    test_count -= 1
+    listToSort = random_list(random.randint(1, 10), 1, 10)
+    print listToSort
+    quick_sort_with_order(listToSort, False)
+    validate_list_sorted(listToSort, False)
+    print listToSort

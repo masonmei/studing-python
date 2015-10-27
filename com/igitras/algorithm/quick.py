@@ -31,11 +31,15 @@ def quick_sort(list_to_sort, start, end):
 
 def quick_sort_with_order(list_to_sort, sort):
     quick_sort(list_to_sort, 0, len(list_to_sort) - 1)
-    print(list_to_sort)
+
     if not sort:
         list_to_sort.reverse()
 
 
 listToSort = [6, 1, 2, 7, 9, 3, 4, 5, 10, 8]
 quick_sort_with_order(listToSort, False)
+print listToSort
+
+listToSort = [6, 1, 2, 7, 9, 3, 4, 5, 10]
+quick_sort_with_order(listToSort, True)
 print listToSort

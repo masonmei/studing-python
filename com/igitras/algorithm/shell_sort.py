@@ -26,7 +26,7 @@ test_count = 100
 random = Random()
 while test_count > 0:
     test_count -= 1
-    arr_to_sort = random_list(random.randint(1, 10), 1, 10)
+    arr_to_sort = random_list(random.randint(1, 100), 1, 100)
     shell_sort(arr_to_sort)
     print arr_to_sort
     validate_list_sorted(arr_to_sort)
